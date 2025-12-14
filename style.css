@@ -1,0 +1,228 @@
+/* Reset en basis styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 2.5em;
+}
+
+.instructions {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+}
+
+/* Game grid styling */
+.game-grid {
+    display: grid;
+    gap: 2px;
+    background-color: #ddd;
+    padding: 2px;
+    border-radius: 10px;
+    margin: 0 auto;
+    width: fit-content;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Cel styling */
+.cell {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    background-color: #f0f0f0;
+    transition: all 0.2s ease;
+}
+
+/* Vloer (leeg veld) */
+.cell.floor {
+    background-color: #e8f4f8;
+}
+
+/* Muur styling */
+.cell.wall {
+    background-color: #8b4513;
+}
+
+/* Robot styling */
+.cell.robot {
+    background-color: #e8f4f8;
+    animation: robotPulse 1s ease-in-out infinite;
+}
+
+/* Finish styling */
+.cell.finish {
+    background-color: #ffd700;
+    animation: finishGlow 1.5s ease-in-out infinite;
+}
+
+/* Robot op finish */
+.cell.robot.finish {
+    background-color: #ffd700;
+}
+
+/* Animaties */
+@keyframes robotPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes finishGlow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
+    }
+}
+
+/* Controls styling */
+.controls {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.reset-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.1em;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-weight: bold;
+}
+
+.reset-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.reset-button:active {
+    transform: translateY(0);
+}
+
+/* Win message styling */
+.win-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    z-index: 1000;
+    animation: slideIn 0.5s ease-out;
+}
+
+.win-message.hidden {
+    display: none;
+}
+
+.win-message h2 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 2.5em;
+}
+
+.win-message p {
+    color: #666;
+    font-size: 1.3em;
+    margin-bottom: 20px;
+}
+
+.play-again-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.1em;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    font-weight: bold;
+}
+
+.play-again-button:hover {
+    transform: scale(1.05);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translate(-50%, -60%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+}
+
+/* Responsive design voor kleinere schermen */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2em;
+    }
+    
+    .cell {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5em;
+    }
+    
+    .container {
+        padding: 20px;
+    }
+    
+    .win-message {
+        width: 90%;
+        padding: 30px 20px;
+    }
+    
+    .win-message h2 {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 400px) {
+    .cell {
+        width: 35px;
+        height: 35px;
+        font-size: 1.2em;
+    }
+}
