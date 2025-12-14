@@ -1,6 +1,9 @@
 // Robot Maze Game - JavaScript
 // Dit script bevat alle game logica voor het robot doolhof spel
 
+// Constanten
+const CELL_SIZE = 50; // Grootte van elke cel in pixels (moet overeenkomen met CSS)
+
 // Game state variabelen
 let robotPosition = { x: 1, y: 1 }; // Start positie van de robot
 let finishPosition = { x: 8, y: 8 }; // Positie van de finish
@@ -27,7 +30,7 @@ function renderGrid() {
     gameGrid.innerHTML = ''; // Maak het grid leeg
     
     // Stel het aantal kolommen in voor het CSS grid
-    gameGrid.style.gridTemplateColumns = `repeat(${maze[0].length}, 50px)`;
+    gameGrid.style.gridTemplateColumns = `repeat(${maze[0].length}, ${CELL_SIZE}px)`;
     
     // Loop door elke rij in het doolhof
     for (let y = 0; y < maze.length; y++) {
@@ -126,35 +129,46 @@ function resetGame() {
     renderGrid();
 }
 
-// Event listener voor keyboard input
-document.addEventListener('keydown', (event) => {
-    // Voorkom standaard scroll gedrag van pijltjestoetsen
-    if(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
-        event.preventDefault();
-    }
-    
-    // Handle de verschillende pijltjestoetsen
-    switch(event.key) {
-        case 'ArrowUp':
-            moveRobot(0, -1); // Beweeg omhoog (y-1)
-            break;
-        case 'ArrowDown':
-            moveRobot(0, 1); // Beweeg omlaag (y+1)
-            break;
-        case 'ArrowLeft':
-            moveRobot(-1, 0); // Beweeg naar links (x-1)
-            break;
-        case 'ArrowRight':
-            moveRobot(1, 0); // Beweeg naar rechts (x+1)
-            break;
-    }
-});
+// Functie om event listeners in te stellen en het spel te starten
+function initGame() {
+    // Event listener voor keyboard input
+    document.addEventListener('keydown', (event) => {
+        // Voorkom standaard scroll gedrag van pijltjestoetsen
+        if(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+            event.preventDefault();
+        }
+        
+        // Handle de verschillende pijltjestoetsen
+        switch(event.key) {
+            case 'ArrowUp':
+                moveRobot(0, -1); // Beweeg omhoog (y-1)
+                break;
+            case 'ArrowDown':
+                moveRobot(0, 1); // Beweeg omlaag (y+1)
+                break;
+            case 'ArrowLeft':
+                moveRobot(-1, 0); // Beweeg naar links (x-1)
+                break;
+            case 'ArrowRight':
+                moveRobot(1, 0); // Beweeg naar rechts (x+1)
+                break;
+        }
+    });
 
-// Event listener voor de reset button
-document.getElementById('reset-button').addEventListener('click', resetGame);
+    // Event listener voor de reset button
+    document.getElementById('reset-button').addEventListener('click', resetGame);
 
-// Event listener voor de "nog een keer spelen" button
-document.getElementById('play-again').addEventListener('click', resetGame);
+    // Event listener voor de "nog een keer spelen" button
+    document.getElementById('play-again').addEventListener('click', resetGame);
 
-// Start het spel door het grid te renderen wanneer de pagina laadt
-renderGrid();
+    // Start het spel door het grid te renderen
+    renderGrid();
+}
+
+// Wacht tot de DOM volledig geladen is voordat het spel start
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGame);
+} else {
+    // DOM is al geladen
+    initGame();
+}
